@@ -14,7 +14,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-little-sisters-mombasa-dev
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*,localhost,127.0.0.1').split(',')
-
+RENDER_EXTERNAL_HOSTNAME = os.getenv('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -143,12 +145,9 @@ MPESA_CALLBACK_URL = os.getenv('MPESA_CALLBACK_URL', 'https://littlesisters-momb
 
 # Security (production)
 if not DEBUG:
-    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    SECURE_HSTS_SECONDS = 31536000
-    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-    SECURE_HSTS_PRELOAD = True
     X_FRAME_OPTIONS = 'DENY'
 
 # Logging — console only (safe for PythonAnywhere and any environment)
