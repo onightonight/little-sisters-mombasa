@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Photo Gallery - Little Sisters of the Poor</title>
+<style>
+  :root {
+    --cream:#faf7f2;--warm-white:#fffef9;--terracotta:#c4714a;--terracotta-light:#e8956d;
+    --deep-brown:#2c1810;--mid-brown:#5a3e2b;--sage:#7a9e7e;--sand:#e8d5b0;--sand-dark:#c9b48a;
+    --text-dark:#1a0f08;--text-mid:#4a3728;--text-light:#8a7060;--gold:#c9a84c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);}
+  
+  nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(250,247,242,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,180,138,0.3);padding:0 4%;display:flex;align-items:center;justify-content:space-between;height:68px;}
+  .nav-logo{display:flex;align-items:center;gap:11px;text-decoration:none;}
+  .nc{width:26px;height:26px;position:relative;display:flex;align-items:center;justify-content:center;}
+  .nc::before,.nc::after{content:'';position:absolute;background:var(--terracotta);border-radius:2px;}
+  .nc::before{width:4px;height:26px;} .nc::after{width:18px;height:4px;top:7px;}
+  .nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--deep-brown);}
+  .nav-logo-text span{display:block;font-size:0.7rem;color:var(--text-light);}
+  .nav-links{display:flex;gap:20px;list-style:none;}
+  .nav-links a{font-size:0.78rem;font-weight:400;text-transform:uppercase;color:var(--text-mid);text-decoration:none;}
+  .nav-links a:hover{color:var(--terracotta);}
+
+  .page-header{padding-top:140px;padding-bottom:60px;text-align:center;background:var(--warm-white);}
+  .page-header h1{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--deep-brown);margin-bottom:12px;}
+  .page-header p{font-size:1.05rem;color:var(--text-mid);max-width:600px;margin:0 auto;}
+
+  .container{max-width:1200px;margin:0 auto;padding:60px 4%;}
+
+  .filter-buttons{display:flex;gap:12px;margin-bottom:40px;flex-wrap:wrap;justify-content:center;}
+  .filter-btn{background:white;color:var(--text-mid);border:1px solid var(--sand-dark);padding:10px 20px;border-radius:2px;cursor:pointer;transition:all 0.3s;font-size:0.9rem;font-weight:500;}
+  .filter-btn.active{background:var(--terracotta);color:white;border-color:var(--terracotta);}
+  .filter-btn:hover{background:var(--terracotta);color:white;border-color:var(--terracotta);}
+
+  .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;}
+  .gallery-item{background:white;border-radius:2px;overflow:hidden;box-shadow:0 8px 24px rgba(44,24,16,0.08);transition:all 0.3s;}
+  .gallery-item:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(44,24,16,0.15);}
+  .gallery-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--sand);}
+  .gallery-info{padding:20px;}
+  .gallery-title{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--deep-brown);margin-bottom:8px;}
+  .gallery-category{font-size:0.75rem;color:var(--terracotta);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+  .gallery-description{font-size:0.9rem;color:var(--text-mid);line-height:1.6;}
+  .gallery-meta{font-size:0.8rem;color:var(--text-light);margin-top:12px;padding-top:12px;border-top:1px solid var(--sand);}
+
+  .modal{display:none;position:fixed;z-index:2000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.8);padding:40px 20px;}
+  .modal.active{display:flex;align-items:center;justify-content:center;}
+  .modal-content{background:white;max-width:90%;max-height:90vh;border-radius:2px;overflow:auto;position:relative;}
+  .modal-img{width:100%;height:auto;display:block;}
+  .modal-close{position:absolute;top:20px;right:20px;background:var(--terracotta);color:white;border:none;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:24px;}
+  .modal-info{padding:24px;background:var(--warm-white);}
+  .modal-info h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--deep-brown);margin-bottom:12px;}
+  .modal-info p{font-size:0.95rem;color:var(--text-mid);line-height:1.7;margin-bottom:12px;}
+
+  footer{background:var(--deep-brown);color:white;padding:40px 5%;margin-top:80px;text-align:center;font-size:0.9rem;}
+
+  @media(max-width:768px){
+    .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
+    .page-header h1{font-size:2rem;}
+    .filter-buttons{justify-content:center;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nc"></div>
+    <div class="nav-logo-text">Little Sisters<span>Mombasa</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/">Gallery</a></li>
+    <li><a href="{% url 'blog' %}">Updates</a></li>
+    <li><a href="{% url 'admin:index' %}">Admin</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <h1>Photo Gallery</h1>
+  <p>Moments of love, care, and community at Little Sisters of the Poor</p>
+</div>
+
+<!-- FILTERS -->
+<div class="container">
+  <div class="filter-buttons">
+    <button class="filter-btn active" onclick="filterPhotos('all')">All Photos</button>
+    <button class="filter-btn" onclick="filterPhotos('elders')">Elders</button>
+    <button class="filter-btn" onclick="filterPhotos('volunteers')">Volunteers</button>
+    <button class="filter-btn" onclick="filterPhotos('events')">Events</button>
+    <button class="filter-btn" onclick="filterPhotos('facilities')">Facilities</button>
+  </div>
+
+  <!-- GALLERY -->
+  <div class="gallery-grid" id="galleryGrid">
+    {% for photo in photos %}
+    <div class="gallery-item" data-category="{{ photo.category }}">
+      <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="gallery-img" onclick="openModal('{{ photo.id }}')">
+      <div class="gallery-info">
+        <div class="gallery-title">{{ photo.title }}</div>
+        <div class="gallery-category">{{ photo.get_category_display }}</div>
+        <p class="gallery-description">{{ photo.description|truncatewords:15 }}</p>
+        <div class="gallery-meta">
+          {% if photo.photographer %}
+          📸 {{ photo.photographer }}
+          {% endif %}
+          <br>{{ photo.date_taken|date:"M Y" }} • Views: {{ photo.views }}
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p style="grid-column:1/-1;text-align:center;color:var(--text-light);padding:40px;">No photos in this category.</p>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="photoModal">
+  <div class="modal-content">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <img id="modalImg" class="modal-img" src="" alt="">
+    <div class="modal-info">
+      <h2 id="modalTitle"></h2>
+      <p id="modalDescription"></p>
+      <p id="modalMeta"></p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Little Sisters of the Poor – Mombasa · Sainte Jeanne Jugan, pray for us</p>
+</footer>
+
+<script>
+const photos = {
+  {% for photo in photos %}
+  '{{ photo.id }}': {
+    image: '{{ photo.image.url }}',
+    title: '{{ photo.title }}',
+    description: '{{ photo.description }}',
+    category: '{{ photo.get_category_display }}',
+    photographer: '{{ photo.photographer }}',
+    date: '{{ photo.date_taken|date:"M d, Y" }}'
+  }{{ forloop.last|yesno:'' }},{% endfor %}
+};
+
+function filterPhotos(category) {
+  document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  document.querySelectorAll('[data-category]').forEach(item => {
+    if (category === 'all' || item.dataset.category === category) {
+      item.style.display = '';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+function openModal(photoId) {
+  const photo = photos[photoId];
+  document.getElementById('modalImg').src = photo.image;
+  document.getElementById('modalTitle').textContent = photo.title;
+  document.getElementById('modalDescription').textContent = photo.description;
+  document.getElementById('modalMeta').innerHTML = `<strong>${photo.category}</strong><br>📸 ${photo.photographer || 'Unknown'} | ${photo.date}`;
+  document.getElementById('photoModal').classList.add('active');
+}
+
+function closeModal() {
+  document.getElementById('photoModal').classList.remove('active');
+}
+
+document.getElementById('photoModal').onclick = function(e) {
+  if (e.target === this) closeModal();
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ post.title }} - Little Sisters of the Poor</title>
+<style>
+  :root {
+    --cream:#faf7f2;--warm-white:#fffef9;--terracotta:#c4714a;--terracotta-light:#e8956d;
+    --deep-brown:#2c1810;--mid-brown:#5a3e2b;--sage:#7a9e7e;--sand:#e8d5b0;--sand-dark:#c9b48a;
+    --text-dark:#1a0f08;--text-mid:#4a3728;--text-light:#8a7060;--gold:#c9a84c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);}
+  
+  nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(250,247,242,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,180,138,0.3);padding:0 4%;display:flex;align-items:center;justify-content:space-between;height:68px;}
+  .nav-logo{display:flex;align-items:center;gap:11px;text-decoration:none;}
+  .nc{width:26px;height:26px;position:relative;display:flex;align-items:center;justify-content:center;}
+  .nc::before,.nc::after{content:'';position:absolute;background:var(--terracotta);border-radius:2px;}
+  .nc::before{width:4px;height:26px;} .nc::after{width:18px;height:4px;top:7px;}
+  .nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--deep-brown);}
+  .nav-logo-text span{display:block;font-size:0.7rem;color:var(--text-light);}
+  .nav-links{display:flex;gap:20px;list-style:none;}
+  .nav-links a{font-size:0.78rem;font-weight:400;text-transform:uppercase;color:var(--text-mid);text-decoration:none;}
+  .nav-links a:hover{color:var(--terracotta);}
+
+  .article-container{max-width:800px;margin:0 auto;padding:120px 4% 60px;}
+
+  .article-header{margin-bottom:40px;padding-bottom:40px;border-bottom:2px solid var(--sand);}
+  .article-title{font-family:'Cormorant Garamond',serif;font-size:2.8rem;color:var(--deep-brown);margin-bottom:20px;line-height:1.2;}
+  .article-meta{font-size:0.9rem;color:var(--text-light);display:flex;gap:20px;flex-wrap:wrap;}
+  .article-featured{width:100%;max-height:600px;object-fit:cover;border-radius:2px;margin:40px 0;}
+  
+  .article-content{font-size:1.05rem;color:var(--text-mid);line-height:2;margin-bottom:32px;}
+  .article-content p{margin-bottom:20px;}
+  .article-content h2{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--deep-brown);margin:32px 0 16px;}
+  .article-content h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--deep-brown);margin:24px 0 12px;}
+  .article-content blockquote{border-left:4px solid var(--terracotta);padding-left:20px;margin:24px 0;font-style:italic;color:var(--text-light);}
+  .article-content ul, .article-content ol{margin:16px 0 16px 40px;}
+  .article-content li{margin-bottom:8px;}
+
+  .article-footer{padding-top:32px;border-top:2px solid var(--sand);margin-top:40px;}
+  .article-tags{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;}
+  .tag{background:white;padding:8px 16px;border-radius:2px;font-size:0.85rem;color:var(--text-mid);text-decoration:none;border:1px solid var(--sand-dark);transition:all 0.3s;}
+  .tag:hover{background:var(--terracotta);color:white;border-color:var(--terracotta);}
+
+  .back-link{display:inline-block;margin-bottom:24px;color:var(--terracotta);text-decoration:none;font-weight:500;transition:color 0.3s;}
+  .back-link:hover{color:var(--mid-brown);}
+
+  .related-posts{margin-top:60px;padding-top:40px;border-top:2px solid var(--sand);}
+  .related-posts h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--deep-brown);margin-bottom:24px;}
+  .related-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;}
+  .related-card{background:white;border-radius:2px;overflow:hidden;box-shadow:0 4px 12px rgba(44,24,16,0.08);transition:all 0.3s;}
+  .related-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(44,24,16,0.12);}
+  .related-card img{width:100%;aspect-ratio:2/1;object-fit:cover;}
+  .related-card-body{padding:16px;}
+  .related-card-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--deep-brown);margin-bottom:8px;line-height:1.3;}
+  .related-card-date{font-size:0.8rem;color:var(--text-light);margin-bottom:8px;}
+  .related-card-link{color:var(--terracotta);text-decoration:none;font-size:0.85rem;font-weight:500;}
+  .related-card-link:hover{color:var(--mid-brown);}
+
+  footer{background:var(--deep-brown);color:white;padding:40px 5%;margin-top:80px;text-align:center;font-size:0.9rem;}
+
+  @media(max-width:768px){
+    .article-title{font-size:2rem;}
+    .article-container{padding:100px 4% 40px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nc"></div>
+    <div class="nav-logo-text">Little Sisters<span>Mombasa</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="{% url 'gallery' %}">Gallery</a></li>
+    <li><a href="{% url 'blog' %}">Updates</a></li>
+    <li><a href="{% url 'admin:index' %}">Admin</a></li>
+  </ul>
+</nav>
+
+<!-- ARTICLE -->
+<div class="article-container">
+  <a href="{% url 'blog' %}" class="back-link">← Back to Updates</a>
+
+  <div class="article-header">
+    <h1 class="article-title">{{ post.title }}</h1>
+    <div class="article-meta">
+      <span>📅 {{ post.published_at|date:"F d, Y" }}</span>
+      <span>✍️ By {{ post.author.get_full_name|default:"Administrator" }}</span>
+      <span>👁️ {{ post.views }} views</span>
+    </div>
+  </div>
+
+  {% if post.featured_image %}
+  <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="article-featured">
+  {% endif %}
+
+  <div class="article-content">
+    {{ post.content|safe }}
+  </div>
+
+  <div class="article-footer">
+    {% if post.tags %}
+    <div class="article-tags">
+      {% for tag in post.tags.split:"," %}
+      <a href="#" class="tag">{{ tag|strip }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- RELATED POSTS -->
+{% if related_posts %}
+<div class="article-container related-posts">
+  <h3>Related Updates</h3>
+  <div class="related-grid">
+    {% for related in related_posts %}
+    <div class="related-card">
+      {% if related.featured_image %}
+      <img src="{{ related.featured_image.url }}" alt="{{ related.title }}">
+      {% endif %}
+      <div class="related-card-body">
+        <div class="related-card-date">{{ related.published_at|date:"M d, Y" }}</div>
+        <h4 class="related-card-title">{{ related.title }}</h4>
+        <a href="{% url 'blog-detail' related.slug %}" class="related-card-link">Read More →</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Little Sisters of the Poor – Mombasa · Sainte Jeanne Jugan, pray for us</p>
+</footer>
+
+</body>
+</html>

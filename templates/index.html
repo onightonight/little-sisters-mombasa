@@ -1,0 +1,967 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Little Sisters of the Poor – Mombasa</title>
+<meta name="description" content="The Little Sisters of the Poor in Mombasa, Kenya — a 74-bed home welcoming the needy elderly of every race, religion and nationality since 1969. Donate, volunteer or request prayer.">
+<meta property="og:title" content="Little Sisters of the Poor – Mombasa">
+<meta property="og:description" content="Serving the needy elderly of Mombasa with love, dignity and faith since 1969.">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--cream:#faf7f2;--warm-white:#fffef9;--terracotta:#c4714a;--terracotta-light:#e8956d;--deep-brown:#2c1810;--mid-brown:#5a3e2b;--sage:#7a9e7e;--sand:#e8d5b0;--sand-dark:#c9b48a;--text-dark:#1a0f08;--text-mid:#4a3728;--text-light:#8a7060;--gold:#c9a84c;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden;}
+
+  /* NAV */
+  nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(250,247,242,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,180,138,0.3);padding:0 4%;display:flex;align-items:center;justify-content:space-between;height:68px;transition:box-shadow 0.3s;}
+  nav.scrolled{box-shadow:0 4px 30px rgba(44,24,16,0.1);}
+  .nav-logo{display:flex;align-items:center;gap:11px;text-decoration:none;}
+  .nc{width:26px;height:26px;position:relative;display:flex;align-items:center;justify-content:center;}
+  .nc::before,.nc::after{content:'';position:absolute;background:var(--terracotta);border-radius:2px;}
+  .nc::before{width:4px;height:26px;}.nc::after{width:18px;height:4px;top:7px;}
+  .nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--deep-brown);line-height:1.2;}
+  .nav-logo-text span{display:block;font-size:0.7rem;font-weight:300;color:var(--text-light);font-style:italic;}
+  .nav-links{display:flex;gap:18px;list-style:none;align-items:center;}
+  .nav-links a{font-size:0.77rem;font-weight:400;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-mid);text-decoration:none;position:relative;padding-bottom:2px;transition:color 0.3s;}
+  .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--terracotta);transition:width 0.3s;}
+  .nav-links a:hover{color:var(--terracotta);}.nav-links a:hover::after{width:100%;}
+  .nav-donate{background:var(--terracotta)!important;color:white!important;padding:8px 18px;border-radius:2px;}
+  .nav-donate::after{display:none!important;}.nav-donate:hover{background:var(--mid-brown)!important;}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;}
+  .hamburger span{width:22px;height:2px;background:var(--deep-brown);display:block;transition:all 0.3s;}
+
+  /* HERO */
+  #home{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:68px;overflow:hidden;}
+  .hero-left{display:flex;flex-direction:column;justify-content:center;padding:72px 4% 72px 7%;}
+  .hero-tag{display:inline-flex;align-items:center;gap:8px;font-size:0.75rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--terracotta);margin-bottom:24px;}
+  .hero-tag::before{content:'';display:block;width:22px;height:1px;background:var(--terracotta);}
+  .hero-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(2.5rem,4.2vw,3.8rem);font-weight:300;line-height:1.15;color:var(--deep-brown);margin-bottom:20px;}
+  .hero-h1 em{font-style:italic;color:var(--terracotta);}
+  .hero-sub{font-size:0.97rem;font-weight:300;color:var(--text-mid);line-height:1.85;max-width:460px;margin-bottom:16px;}
+  .hero-mission{font-family:'Cormorant Garamond',serif;font-size:0.93rem;font-style:italic;color:var(--text-light);border-left:2px solid var(--terracotta);padding-left:14px;margin-bottom:36px;line-height:1.7;max-width:440px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn-primary{background:var(--terracotta);color:white;padding:14px 30px;border-radius:2px;border:none;font-family:'DM Sans',sans-serif;font-size:0.86rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;transition:background 0.3s,transform 0.2s;}
+  .btn-primary:hover{background:var(--mid-brown);transform:translateY(-1px);}
+  .btn-outline{background:transparent;color:var(--terracotta);padding:13px 26px;border-radius:2px;border:1.5px solid var(--terracotta);font-family:'DM Sans',sans-serif;font-size:0.86rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.3s;}
+  .btn-outline:hover{background:var(--terracotta);color:white;}
+  .hero-stats{display:flex;gap:32px;margin-top:48px;padding-top:32px;border-top:1px solid var(--sand);flex-wrap:wrap;}
+  .stat-n{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:600;color:var(--terracotta);line-height:1;}
+  .stat-l{font-size:0.73rem;color:var(--text-light);margin-top:3px;}
+  .hero-right{position:relative;background:linear-gradient(160deg,var(--sand) 0%,var(--sand-dark) 100%);display:flex;align-items:center;justify-content:center;padding:56px 36px;}
+  .hero-right-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 40% 50%,rgba(196,113,74,0.18) 0%,transparent 65%);}
+  .hero-pattern{position:absolute;inset:0;opacity:0.05;background-image:repeating-linear-gradient(45deg,var(--deep-brown) 0,var(--deep-brown) 1px,transparent 0,transparent 50%);background-size:20px 20px;}
+  .hero-card{position:relative;z-index:2;background:white;padding:44px 36px;border-radius:2px;box-shadow:0 20px 60px rgba(44,24,16,0.15);max-width:360px;text-align:center;}
+  .hc{width:52px;height:52px;position:relative;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;}
+  .hc::before,.hc::after{content:'';position:absolute;background:var(--terracotta);border-radius:2px;}
+  .hc::before{width:6px;height:52px;}.hc::after{width:36px;height:6px;top:14px;}
+  .hero-quote{font-family:'Cormorant Garamond',serif;font-size:1.28rem;font-weight:300;font-style:italic;color:var(--deep-brown);line-height:1.65;margin-bottom:14px;}
+  .hero-quote-attr{font-size:0.73rem;color:var(--text-light);letter-spacing:0.08em;text-transform:uppercase;}
+  .hero-vow{margin-top:20px;padding:14px;background:var(--cream);border-radius:2px;font-size:0.8rem;color:var(--text-mid);line-height:1.6;}
+  .hero-vow strong{color:var(--terracotta);font-weight:500;display:block;margin-bottom:3px;font-size:0.72rem;letter-spacing:0.06em;text-transform:uppercase;}
+
+  /* SECTIONS */
+  section{padding:96px 5%;}
+  .section-tag{display:inline-flex;align-items:center;gap:8px;font-size:0.73rem;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--terracotta);margin-bottom:12px;}
+  .section-tag::before{content:'';display:block;width:18px;height:1px;background:var(--terracotta);}
+  .section-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(1.85rem,2.8vw,2.7rem);font-weight:300;color:var(--deep-brown);line-height:1.2;margin-bottom:14px;}
+  .section-h2 em{font-style:italic;color:var(--terracotta);}
+  .section-sub{font-size:0.93rem;font-weight:300;color:var(--text-mid);line-height:1.85;max-width:620px;}
+
+  /* ABOUT */
+  #about{background:var(--warm-white);}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;margin-top:52px;}
+  .about-text{font-size:0.91rem;color:var(--text-mid);line-height:1.9;margin-bottom:16px;font-weight:300;}
+  .about-founding{background:var(--cream);border-left:3px solid var(--terracotta);padding:16px 20px;border-radius:0 2px 2px 0;margin:20px 0;}
+  .about-founding p{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--deep-brown);line-height:1.7;}
+  .about-founding span{font-size:0.76rem;color:var(--text-light);display:block;margin-top:7px;}
+  .values-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px;}
+  .value-card{background:var(--cream);padding:18px;border-radius:2px;border-bottom:2px solid var(--terracotta);}
+  .value-card h4{font-family:'Cormorant Garamond',serif;font-size:0.98rem;font-weight:600;color:var(--deep-brown);margin-bottom:5px;}
+  .value-card p{font-size:0.79rem;color:var(--text-mid);line-height:1.65;font-weight:300;}
+  .about-visual{background:linear-gradient(135deg,var(--sand) 0%,var(--sand-dark) 100%);padding:36px;border-radius:2px;position:relative;overflow:hidden;}
+  .about-visual-accent{position:absolute;top:18px;left:18px;right:18px;bottom:18px;border:1px solid rgba(201,164,76,0.3);border-radius:2px;pointer-events:none;}
+  .logo-explain h3{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--deep-brown);margin-bottom:14px;}
+  .logo-part{display:flex;gap:12px;margin-bottom:14px;align-items:flex-start;}
+  .logo-part-icon{font-size:1.3rem;flex-shrink:0;}
+  .logo-part-text strong{font-size:0.83rem;color:var(--deep-brown);font-weight:500;display:block;margin-bottom:2px;}
+  .logo-part-text p{font-size:0.77rem;color:var(--text-mid);line-height:1.65;font-weight:300;}
+  .history-timeline{margin-top:22px;}
+  .timeline-item{display:flex;gap:14px;margin-bottom:14px;}
+  .timeline-year{font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-weight:600;color:var(--terracotta);white-space:nowrap;min-width:46px;}
+  .timeline-text{font-size:0.8rem;color:var(--text-mid);line-height:1.65;font-weight:300;border-left:1px solid var(--sand-dark);padding-left:12px;}
+
+  /* MVV */
+  .mvv-strip{background:var(--deep-brown);padding:56px 5%;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;}
+  .mvv-block{padding:36px;background:var(--deep-brown);}
+  .mvv-block h3{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--terracotta-light);margin-bottom:10px;}
+  .mvv-block p{font-size:0.86rem;color:rgba(250,247,242,0.65);line-height:1.8;font-weight:300;}
+
+  /* SERVICES */
+  #services{background:var(--cream);}
+  .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:52px;}
+  .service-card{background:var(--warm-white);padding:32px 26px;border-radius:2px;border:1px solid rgba(201,180,138,0.3);position:relative;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s;}
+  .service-card:hover{transform:translateY(-4px);box-shadow:0 20px 50px rgba(44,24,16,0.1);}
+  .service-card::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--terracotta);transform:scaleX(0);transform-origin:left;transition:transform 0.4s;}
+  .service-card:hover::after{transform:scaleX(1);}
+  .service-num{font-family:'Cormorant Garamond',serif;font-size:0.83rem;color:var(--sand-dark);letter-spacing:0.1em;margin-bottom:14px;display:block;}
+  .service-icon{font-size:1.9rem;margin-bottom:14px;display:block;}
+  .service-title{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--deep-brown);margin-bottom:9px;}
+  .service-desc{font-size:0.83rem;color:var(--text-mid);line-height:1.8;font-weight:300;}
+
+  /* JEANNE */
+  #jeanne{background:var(--warm-white);}
+  .jeanne-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:52px;align-items:start;}
+  .jeanne-visual{background:linear-gradient(135deg,var(--sand) 0%,var(--sand-dark) 100%);border-radius:2px;padding:44px 36px;text-align:center;position:relative;overflow:hidden;}
+  .jeanne-visual-accent{position:absolute;top:14px;left:14px;right:14px;bottom:14px;border:1px solid rgba(201,164,76,0.4);border-radius:2px;pointer-events:none;}
+  .jeanne-dates{font-size:0.76rem;color:var(--text-light);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px;}
+  .jeanne-name{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:300;color:var(--deep-brown);margin-bottom:4px;}
+  .jeanne-name em{display:block;font-size:0.88rem;color:var(--terracotta);font-style:italic;margin-bottom:20px;}
+  .jeanne-visual p{font-size:0.83rem;color:var(--text-mid);line-height:1.8;font-weight:300;text-align:left;margin-bottom:12px;position:relative;z-index:1;}
+  .sayings{margin-top:24px;}
+  .saying{background:white;padding:14px 18px;border-radius:2px;border-left:2px solid var(--gold);margin-bottom:9px;font-family:'Cormorant Garamond',serif;font-size:0.93rem;font-style:italic;color:var(--deep-brown);line-height:1.6;}
+  .pope-card{background:var(--cream);padding:18px;border-radius:2px;margin-bottom:12px;}
+  .pope-card h4{font-family:'Cormorant Garamond',serif;font-size:0.98rem;font-weight:600;color:var(--deep-brown);margin-bottom:5px;}
+  .pope-card p{font-size:0.8rem;color:var(--text-mid);line-height:1.7;font-weight:300;}
+  .pope-date{font-size:0.7rem;color:var(--terracotta);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px;}
+  .novena-box{background:var(--cream);padding:24px;border-radius:2px;margin-top:20px;border:1px solid rgba(201,180,138,0.3);}
+  .novena-box h4{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-weight:600;color:var(--deep-brown);margin-bottom:10px;}
+  .novena-box p{font-size:0.8rem;color:var(--text-mid);line-height:1.8;font-weight:300;font-style:italic;}
+
+  /* GALLERY */
+  #gallery{background:var(--deep-brown);padding:96px 5%;}
+  #gallery .section-tag{color:var(--terracotta-light);}
+  #gallery .section-tag::before{background:var(--terracotta-light);}
+  #gallery .section-h2{color:var(--cream);}
+  #gallery .section-h2 em{color:var(--terracotta-light);}
+  #gallery .section-sub{color:rgba(250,247,242,0.6);}
+  .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:28px;}
+  .gallery-item{border-radius:2px;overflow:hidden;aspect-ratio:1;position:relative;background:rgba(255,255,255,0.06);cursor:pointer;}
+  .gallery-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.4s;}
+  .gallery-item:hover img{transform:scale(1.06);}
+  .gallery-item-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(44,24,16,0.7) 0%,transparent 55%);opacity:0;transition:opacity 0.3s;display:flex;align-items:flex-end;padding:14px;}
+  .gallery-item:hover .gallery-item-overlay{opacity:1;}
+  .gallery-item-overlay span{color:white;font-size:0.76rem;}
+  .gallery-placeholder{grid-column:1/-1;padding:56px;text-align:center;}
+  .gallery-placeholder p{color:rgba(250,247,242,0.28);font-size:0.86rem;}
+  .gallery-view-all{text-align:center;margin-top:28px;}
+  .btn-outline-light{background:transparent;color:var(--cream);padding:12px 28px;border-radius:2px;border:1.5px solid rgba(250,247,242,0.35);font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:all 0.3s;}
+  .btn-outline-light:hover{background:var(--terracotta);border-color:var(--terracotta);color:white;}
+
+  /* LIGHTBOX */
+  .lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.93);z-index:9999;align-items:center;justify-content:center;}
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:2px;}
+  .lightbox-close{position:absolute;top:18px;right:22px;color:white;font-size:2rem;cursor:pointer;background:none;border:none;opacity:0.65;transition:opacity 0.2s;}
+  .lightbox-close:hover{opacity:1;}
+
+  /* BLOG */
+  #blog{background:var(--cream);}
+  .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:32px;margin-top:52px;}
+  .blog-card{background:white;border-radius:2px;overflow:hidden;box-shadow:0 8px 24px rgba(44,24,16,0.08);transition:all 0.3s;}
+  .blog-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(44,24,16,0.15);}
+  .blog-featured-img{width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--sand);}
+  .blog-img-placeholder{width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,var(--sand),var(--sand-dark));display:flex;align-items:center;justify-content:center;font-size:2rem;}
+  .blog-content{padding:24px;}
+  .blog-date{font-size:0.75rem;color:var(--terracotta);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+  .blog-title{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:600;color:var(--deep-brown);margin-bottom:12px;line-height:1.4;}
+  .blog-excerpt{font-size:0.9rem;color:var(--text-mid);line-height:1.7;margin-bottom:16px;font-weight:300;}
+  .read-more{color:var(--terracotta);text-decoration:none;font-size:0.85rem;font-weight:500;text-transform:uppercase;letter-spacing:0.06em;transition:color 0.3s;}
+  .read-more:hover{color:var(--mid-brown);}
+  .blog-view-all{text-align:center;margin-top:44px;}
+  .blog-empty{text-align:center;padding:56px;color:var(--text-light);font-size:0.9rem;}
+
+  /* EVENTS */
+  #events{background:var(--warm-white);}
+  .events-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px;margin-top:52px;}
+  .event-card{background:white;border-radius:2px;padding:24px;border:1px solid rgba(201,180,138,0.3);transition:all 0.3s;position:relative;}
+  .event-card:hover{border-color:var(--terracotta);transform:translateY(-2px);box-shadow:0 12px 30px rgba(44,24,16,0.08);}
+  .event-date-badge{display:inline-flex;flex-direction:column;align-items:center;background:var(--terracotta);color:white;padding:8px 14px;border-radius:2px;margin-bottom:16px;min-width:52px;}
+  .event-date-badge .day{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;line-height:1;}
+  .event-date-badge .month{font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;}
+  .event-type-tag{font-size:0.7rem;color:var(--terracotta);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;}
+  .event-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-weight:600;color:var(--deep-brown);margin-bottom:8px;}
+  .event-desc{font-size:0.82rem;color:var(--text-mid);line-height:1.7;font-weight:300;margin-bottom:10px;}
+  .event-meta{font-size:0.75rem;color:var(--text-light);display:flex;gap:12px;flex-wrap:wrap;}
+  .event-meta span{display:flex;align-items:center;gap:4px;}
+  .events-empty{text-align:center;padding:48px;color:var(--text-light);}
+
+  /* DONATE */
+  #donate{background:var(--cream);}
+  .donate-wrapper{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;margin-top:52px;}
+  .benefactor-text{font-size:0.91rem;color:var(--text-mid);line-height:1.9;margin-bottom:14px;font-weight:300;}
+  .benefactor-quote{background:var(--warm-white);border-left:3px solid var(--gold);padding:14px 18px;border-radius:0 2px 2px 0;margin:18px 0;font-family:'Cormorant Garamond',serif;font-size:0.97rem;font-style:italic;color:var(--deep-brown);line-height:1.7;}
+  .bank-details{background:var(--deep-brown);padding:24px;border-radius:2px;margin-top:20px;}
+  .bank-details h4{font-family:'Cormorant Garamond',serif;font-size:0.97rem;color:var(--terracotta-light);margin-bottom:14px;font-weight:600;}
+  .bank-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid rgba(250,247,242,0.07);}
+  .bank-row:last-child{border:none;}
+  .bank-row span:first-child{font-size:0.76rem;color:rgba(250,247,242,0.48);}
+  .bank-row span:last-child{font-size:0.8rem;color:var(--cream);font-weight:500;}
+  .donate-form{background:var(--warm-white);padding:40px 32px;border-radius:2px;border:1px solid rgba(201,180,138,0.3);box-shadow:0 20px 60px rgba(44,24,16,0.07);}
+  .donate-form h3{font-family:'Cormorant Garamond',serif;font-size:1.45rem;color:var(--deep-brown);margin-bottom:5px;font-weight:600;}
+  .donate-form>p{font-size:0.8rem;color:var(--text-light);margin-bottom:24px;}
+  .type-toggle{display:flex;border:1.5px solid var(--sand);border-radius:2px;overflow:hidden;margin-bottom:18px;}
+  .type-btn{flex:1;padding:10px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.81rem;font-weight:500;background:white;color:var(--text-mid);transition:all 0.2s;}
+  .type-btn.active{background:var(--terracotta);color:white;}
+  .amount-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:18px;}
+  .amount-btn{padding:11px 5px;border:1.5px solid var(--sand-dark);border-radius:2px;background:transparent;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.81rem;color:var(--text-mid);transition:all 0.2s;font-weight:500;}
+  .amount-btn.active,.amount-btn:hover{border-color:var(--terracotta);background:var(--terracotta);color:white;}
+  .form-group{margin-bottom:14px;}
+  .form-group label{display:block;font-size:0.73rem;font-weight:500;color:var(--text-mid);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;}
+  .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 13px;border:1.5px solid var(--sand);border-radius:2px;background:white;font-family:'DM Sans',sans-serif;font-size:0.87rem;color:var(--text-dark);outline:none;transition:border-color 0.2s;}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--terracotta);}
+  .form-group textarea{resize:vertical;min-height:88px;}
+  .mpesa-highlight{background:var(--cream);padding:12px;border-radius:2px;margin-bottom:14px;font-size:0.81rem;color:var(--text-mid);line-height:1.6;}
+  .mpesa-highlight strong{color:var(--terracotta);}
+  .donate-submit{width:100%;padding:15px;background:var(--terracotta);color:white;border:none;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:background 0.3s;}
+  .donate-submit:hover{background:var(--mid-brown);}
+  .secure-note{text-align:center;font-size:0.73rem;color:var(--text-light);margin-top:10px;}
+
+  /* VOLUNTEER */
+  #volunteer{background:var(--warm-white);}
+  .volunteer-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;margin-top:52px;}
+  .ajj-intro{font-size:0.91rem;color:var(--text-mid);line-height:1.9;margin-bottom:14px;font-weight:300;}
+  .ajj-activities{background:var(--cream);padding:22px;border-radius:2px;margin:18px 0;}
+  .ajj-activities h4{font-family:'Cormorant Garamond',serif;font-size:0.97rem;font-weight:600;color:var(--deep-brown);margin-bottom:12px;}
+  .activity-list{list-style:none;display:flex;flex-direction:column;gap:7px;}
+  .activity-list li{display:flex;gap:9px;align-items:flex-start;font-size:0.83rem;color:var(--text-mid);font-weight:300;line-height:1.6;}
+  .activity-list li::before{content:'✦';color:var(--terracotta);font-size:0.58rem;margin-top:4px;flex-shrink:0;}
+  .ajj-contact-box{background:var(--deep-brown);padding:18px 22px;border-radius:2px;margin-top:14px;}
+  .ajj-contact-box p{font-size:0.83rem;color:rgba(250,247,242,0.78);margin-bottom:5px;}
+  .ajj-contact-box a{color:var(--terracotta-light);text-decoration:none;}
+  .opp-cards{display:flex;flex-direction:column;gap:11px;}
+  .opp-card{display:flex;gap:14px;padding:20px;border:1px solid rgba(201,180,138,0.3);border-radius:2px;background:var(--cream);transition:border-color 0.3s;}
+  .opp-card:hover{border-color:var(--terracotta);}
+  .opp-icon{font-size:1.55rem;flex-shrink:0;}
+  .opp-title{font-family:'Cormorant Garamond',serif;font-size:1.02rem;font-weight:600;color:var(--deep-brown);margin-bottom:4px;}
+  .opp-desc{font-size:0.8rem;color:var(--text-mid);line-height:1.7;font-weight:300;}
+  .contact-form-box{background:var(--cream);padding:36px 30px;border-radius:2px;border:1px solid rgba(201,180,138,0.3);margin-top:16px;}
+  .contact-form-box h3{font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--deep-brown);margin-bottom:5px;font-weight:600;}
+  .contact-form-box>p{font-size:0.8rem;color:var(--text-light);margin-bottom:24px;}
+
+  /* VOCATION */
+  #vocation{background:var(--cream);}
+  .vocation-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:52px;}
+  .vocation-text{font-size:0.91rem;color:var(--text-mid);line-height:1.9;margin-bottom:14px;font-weight:300;}
+  .stages{display:flex;flex-direction:column;gap:0;}
+  .stage{display:flex;gap:18px;position:relative;padding-bottom:22px;}
+  .stage:last-child{padding-bottom:0;}
+  .stage-left{display:flex;flex-direction:column;align-items:center;}
+  .stage-dot{width:9px;height:9px;border-radius:50%;background:var(--terracotta);flex-shrink:0;margin-top:4px;}
+  .stage-line{width:1px;flex:1;background:var(--sand-dark);margin-top:4px;}
+  .stage:last-child .stage-line{display:none;}
+  .stage-content h4{font-family:'Cormorant Garamond',serif;font-size:0.93rem;font-weight:600;color:var(--deep-brown);margin-bottom:3px;}
+  .stage-content p{font-size:0.79rem;color:var(--text-mid);line-height:1.65;font-weight:300;}
+  .vocation-contact{background:var(--deep-brown);padding:20px;border-radius:2px;margin-top:24px;}
+  .vocation-contact p{font-size:0.83rem;color:rgba(250,247,242,0.78);margin-bottom:4px;}
+  .vocation-contact a{color:var(--terracotta-light);text-decoration:none;}
+  .vow-box{background:var(--warm-white);border:1px solid rgba(201,180,138,0.3);padding:28px;border-radius:2px;}
+  .vow-box h3{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--deep-brown);margin-bottom:14px;}
+  .vow-item{display:flex;gap:13px;margin-bottom:18px;align-items:flex-start;}
+  .vow-num{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--terracotta);font-weight:600;flex-shrink:0;min-width:22px;}
+  .vow-item h4{font-size:0.86rem;font-weight:500;color:var(--deep-brown);margin-bottom:3px;}
+  .vow-item p{font-size:0.8rem;color:var(--text-mid);line-height:1.65;font-weight:300;}
+
+  /* TESTIMONIALS */
+  #testimonials{background:var(--warm-white);padding:96px 5%;}
+  .testimonials-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;margin-top:52px;}
+  .testimonial-card{background:white;padding:28px;border-radius:2px;border:1px solid rgba(201,180,138,0.25);box-shadow:0 4px 16px rgba(44,24,16,0.06);position:relative;}
+  .testimonial-card::before{content:'\201C';font-family:'Cormorant Garamond',serif;font-size:4rem;color:var(--terracotta);opacity:0.2;position:absolute;top:10px;left:18px;line-height:1;}
+  .testimonial-quote{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--deep-brown);line-height:1.75;margin-bottom:18px;padding-top:24px;}
+  .testimonial-person{display:flex;align-items:center;gap:12px;}
+  .testimonial-avatar{width:40px;height:40px;border-radius:50%;background:var(--sand);object-fit:cover;}
+  .testimonial-avatar-placeholder{width:40px;height:40px;border-radius:50%;background:var(--terracotta);display:flex;align-items:center;justify-content:center;color:white;font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;flex-shrink:0;}
+  .testimonial-name{font-size:0.84rem;font-weight:500;color:var(--deep-brown);}
+  .testimonial-role{font-size:0.75rem;color:var(--text-light);}
+
+  /* CONTACT */
+  #contact{background:var(--cream);}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;margin-top:52px;}
+  .contact-depts{display:flex;flex-direction:column;gap:11px;}
+  .dept-card{background:var(--warm-white);padding:18px;border-radius:2px;border:1px solid rgba(201,180,138,0.3);}
+  .dept-card h4{font-family:'Cormorant Garamond',serif;font-size:0.93rem;font-weight:600;color:var(--deep-brown);margin-bottom:7px;}
+  .dept-item{display:flex;align-items:center;gap:9px;margin-bottom:3px;}
+  .dept-item span{font-size:0.95rem;}
+  .dept-item a{font-size:0.78rem;color:var(--terracotta);text-decoration:none;}
+  .dept-item a:hover{text-decoration:underline;}
+  .map-box{background:linear-gradient(135deg,var(--sand) 0%,var(--sand-dark) 100%);border-radius:2px;padding:44px;text-align:center;border:1px solid rgba(201,180,138,0.3);margin-bottom:16px;}
+  .map-pin{font-size:2.8rem;display:block;margin-bottom:14px;}
+  .map-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:300;color:var(--deep-brown);margin-bottom:5px;}
+  .map-addr{font-size:0.83rem;color:var(--text-mid);margin-bottom:5px;}
+  .map-hours{font-size:0.78rem;color:var(--text-light);margin-bottom:20px;}
+  .map-btn{display:inline-block;padding:11px 26px;background:var(--terracotta);color:white;border-radius:2px;text-decoration:none;font-size:0.83rem;font-weight:500;transition:background 0.3s;}
+  .map-btn:hover{background:var(--mid-brown);}
+
+  /* FOOTER */
+  footer{background:var(--deep-brown);padding:64px 5% 32px;}
+  .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:44px;margin-bottom:44px;}
+  .footer-logo-wrap{display:flex;align-items:center;gap:11px;margin-bottom:14px;}
+  .fc{width:26px;height:26px;position:relative;display:flex;align-items:center;justify-content:center;}
+  .fc::before,.fc::after{content:'';position:absolute;background:var(--terracotta-light);border-radius:2px;}
+  .fc::before{width:4px;height:26px;}.fc::after{width:18px;height:4px;top:7px;}
+  .footer-name{font-family:'Cormorant Garamond',serif;font-size:0.97rem;font-weight:600;color:var(--cream);line-height:1.2;}
+  .footer-name span{display:block;font-size:0.68rem;font-weight:300;color:rgba(250,247,242,0.42);font-style:italic;}
+  .footer-brand p{font-size:0.83rem;color:rgba(250,247,242,0.52);line-height:1.8;font-weight:300;}
+  .footer-col h4{font-family:'Cormorant Garamond',serif;font-size:0.92rem;font-weight:600;color:var(--cream);margin-bottom:14px;}
+  .footer-links{list-style:none;display:flex;flex-direction:column;gap:8px;}
+  .footer-links a{color:rgba(250,247,242,0.5);text-decoration:none;font-size:0.8rem;font-weight:300;transition:color 0.3s;}
+  .footer-links a:hover{color:var(--terracotta-light);}
+  .footer-bottom{border-top:1px solid rgba(250,247,242,0.08);padding-top:22px;display:flex;justify-content:space-between;align-items:center;font-size:0.73rem;color:rgba(250,247,242,0.32);flex-wrap:wrap;gap:10px;}
+  .footer-bottom a{color:rgba(250,247,242,0.32);text-decoration:none;}
+
+  /* ANIMATIONS */
+  .fade-up{opacity:0;transform:translateY(26px);transition:opacity 0.6s ease,transform 0.6s ease;}
+  .fade-up.visible{opacity:1;transform:translateY(0);}
+  .d1{transition-delay:0.1s;}.d2{transition-delay:0.2s;}.d3{transition-delay:0.3s;}
+
+  /* NOTIFICATION */
+  .notif{position:fixed;bottom:22px;right:22px;z-index:9999;background:var(--sage);color:white;padding:13px 20px;border-radius:2px;box-shadow:0 8px 30px rgba(0,0,0,0.2);font-size:0.85rem;max-width:340px;line-height:1.5;transform:translateY(80px);opacity:0;transition:all 0.4s;}
+  .notif.show{transform:translateY(0);opacity:1;}
+
+  /* RESPONSIVE */
+  @media(max-width:1080px){
+    #home{grid-template-columns:1fr;}.hero-right{display:none;}
+    .about-grid,.jeanne-grid,.donate-wrapper,.volunteer-grid,.vocation-grid,.contact-grid{grid-template-columns:1fr;gap:44px;}
+    .services-grid{grid-template-columns:repeat(2,1fr);}.mvv-strip{grid-template-columns:1fr;}
+    .footer-top{grid-template-columns:1fr 1fr;}.values-grid{grid-template-columns:1fr;}
+    .testimonials-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:700px){
+    .nav-links{display:none;flex-direction:column;position:absolute;top:68px;left:0;right:0;background:var(--cream);padding:20px 5%;border-bottom:1px solid var(--sand);gap:14px;}
+    .nav-links.open{display:flex;}.hamburger{display:flex;}
+    section{padding:64px 5%;}.hero-left{padding:52px 5%;}
+    .services-grid,.testimonials-grid{grid-template-columns:1fr;}
+    .amount-grid{grid-template-columns:repeat(2,1fr);}
+    .footer-top{grid-template-columns:1fr;}
+    .donate-form,.contact-form-box{padding:24px 18px;}
+    .events-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#home" class="nav-logo">
+    <div class="nc"></div>
+    <div class="nav-logo-text">Little Sisters of the Poor <span>Mombasa, Kenya</span></div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#jeanne">Foundress</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#volunteer">Volunteer</a></li>
+    <li><a href="#vocation">Vocation</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#donate" class="nav-donate">Donate</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="home">
+  <div class="hero-left">
+    <div class="hero-tag">Tudor, Mombasa · Est. 1969</div>
+    <h1 class="hero-h1">A home of <em>loving care</em><br>for the elderly poor</h1>
+    <p class="hero-sub">The Little Sisters of the Poor in Mombasa welcome the needy elderly of every race, religion, and nationality — offering shelter, care, and family until God calls them home.</p>
+    <p class="hero-mission">"Continuing the work of Saint Jeanne Jugan, our mission is to offer the neediest elderly a home where they will be welcomed as Christ, cared for as family and accompanied with dignity."</p>
+    <div class="hero-ctas">
+      <a href="#donate" class="btn-primary">Support Our Mission</a>
+      <a href="#volunteer" class="btn-outline">Get Involved</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="stat-n">74+</div><div class="stat-l">Beds of Care</div></div>
+      <div><div class="stat-n">56</div><div class="stat-l">Years Serving</div></div>
+      <div><div class="stat-n">4th</div><div class="stat-l">Vow: Hospitality</div></div>
+      {% if upcoming_events.count %}<div><div class="stat-n">{{ upcoming_events.count }}</div><div class="stat-l">Upcoming Events</div></div>{% endif %}
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-bg"></div>
+    <div class="hero-pattern"></div>
+    <div class="hero-card">
+      <div class="hc"></div>
+      <p class="hero-quote">"Whatever you do to the least of my brothers and sisters, you do unto me."</p>
+      <p class="hero-quote-attr">— Matthew 25:40</p>
+      <div class="hero-vow">
+        <strong>Our 4th Vow</strong>
+        Hospitality — the heart of the Little Sisters of the Poor. We welcome each elder as Christ himself.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-tag">Who We Are</div>
+  <h2 class="section-h2">A family united in<br><em>faith and hospitality</em></h2>
+  <div class="about-grid">
+    <div>
+      <p class="about-text">The Little Sisters of the Poor is a Catholic Religious Order serving the needy elderly of 65 years and above, irrespective of nationality, tribe, race or creed. We are a nonprofit organisation depending wholly on Providence — and on the generosity of our benefactors — for the upkeep of those in our care.</p>
+      <p class="about-text">The Congregation was founded by Saint Jeanne Jugan in 1839 in France. Today we serve on all five continents, in more than 30 countries. Here in Mombasa, we endeavour to live as a family according to the founding charism of our beloved foundress.</p>
+      <div class="about-founding">
+        <p>"Back in 1961, Bishop Eugene Butler CSSP invited the Little Sisters to open a home in his Diocese. On June 7th 1969, three sisters arrived in Kenya for the foundation."</p>
+        <span>— History of the Mombasa Home</span>
+      </div>
+      <p class="about-text">The Sisters first rented a house on Kilindini Road before moving to the present address in Tudor, where a home with a capacity of 74 beds was built. For 56 years, hundreds of elderly people of all faiths, tribes, and nationalities have found a home here. The Jeanne Jugan family in Mombasa comprises the Little Sisters, the elderly, staff members, the Association Jeanne Jugan, benefactors, friends and volunteers from all walks of life.</p>
+      <div class="values-grid">
+        <div class="value-card"><h4>Reverence</h4><p>Honour for the sacredness of every human life, especially the poorest and most vulnerable.</p></div>
+        <div class="value-card"><h4>Family Spirit</h4><p>Joyful hospitality embracing all with open arms, hearts, and minds without discrimination.</p></div>
+        <div class="value-card"><h4>Humble Service</h4><p>Raising others up, placing their needs before our own in simple everyday acts of love.</p></div>
+        <div class="value-card"><h4>Compassion</h4><p>Eagerness to relieve pain in all its forms and make the elderly truly happy.</p></div>
+        <div class="value-card"><h4>Stewardship</h4><p>Gratitude for God's gifts, used responsibly; trust in Providence and the generosity of others.</p></div>
+        <div class="value-card"><h4>Hospitality</h4><p>Our unique 4th vow — the heart of our identity, welcoming each elder as Christ himself.</p></div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="about-visual-accent"></div>
+      <div class="logo-explain">
+        <h3>The Meaning of Our Logo</h3>
+        <div class="logo-part"><div class="logo-part-icon">🏠</div><div class="logo-part-text"><strong>The House</strong><p>With rounded corners, evoking the welcoming spirit our homes must embody — a true home, not merely a building.</p></div></div>
+        <div class="logo-part"><div class="logo-part-icon">🤲</div><div class="logo-part-text"><strong>The Hands</strong><p>The extended hand holding a walking stick — representing welcome, help, support, and accompaniment of Sister, staff, and volunteer alike.</p></div></div>
+        <div class="logo-part"><div class="logo-part-icon">🕊️</div><div class="logo-part-text"><strong>The Dove</strong><p>Symbolises the Holy Spirit and the charism received by Saint Jeanne Jugan. Both inside and outside the house — open to all, radiating peace.</p></div></div>
+        <div class="logo-part"><div class="logo-part-icon">🎨</div><div class="logo-part-text"><strong>The Colours</strong><p>Warm red-orange and golden yellow — resonating with our mission of welcoming kindness and the vitality of our congregation.</p></div></div>
+      </div>
+      <div class="history-timeline">
+        <div class="timeline-item"><div class="timeline-year">1839</div><div class="timeline-text">Saint Jeanne Jugan founds the congregation in Saint Servan, France.</div></div>
+        <div class="timeline-item"><div class="timeline-year">1961</div><div class="timeline-text">Bishop Eugene Butler CSSP invites the Little Sisters to Mombasa Diocese.</div></div>
+        <div class="timeline-item"><div class="timeline-year">1969</div><div class="timeline-text">Three Sisters arrive in Kenya on June 7th — the Mombasa foundation begins.</div></div>
+        <div class="timeline-item"><div class="timeline-year">Today</div><div class="timeline-text">74-bed home on Tom Mboya Avenue, Tudor — serving all faiths, races and backgrounds.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MVV -->
+<div class="mvv-strip">
+  <div class="mvv-block fade-up"><h3>Our Mission</h3><p>To offer the neediest elderly of every race and religion a home where they will be welcomed as Christ, cared for as family and accompanied with dignity until God calls them to himself.</p></div>
+  <div class="mvv-block fade-up d1"><h3>Our Vision</h3><p>To contribute to the culture of life by nurturing communities where each person is valued, the solidarity of the human family is celebrated, and the compassionate love of Christ is shared with all.</p></div>
+  <div class="mvv-block fade-up d2"><h3>Our Charism</h3><p>Rooted in the spirit of Saint Jeanne Jugan: simplicity, humility, and joyful hospitality — received from the Holy Spirit and lived out in service to the most vulnerable elderly.</p></div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-tag">What We Offer</div>
+  <h2 class="section-h2">Holistic care for every<br><em>dimension of life</em></h2>
+  <p class="section-sub">Our programmes nurture the body, mind, and spirit of every elder entrusted to our home — regardless of background or belief.</p>
+  <div class="services-grid">
+    <div class="service-card fade-up"><span class="service-num">01</span><span class="service-icon">🏠</span><h3 class="service-title">Residential Care</h3><p class="service-desc">Safe, comfortable accommodation for those 65 and above. A true home where each resident is known, loved and treated as family — irrespective of nationality, tribe, race or creed.</p></div>
+    <div class="service-card fade-up d1"><span class="service-num">02</span><span class="service-icon">🏥</span><h3 class="service-title">Nursing & Medical</h3><p class="service-desc">Our nursing team provides daily health monitoring, medication management, and compassionate care for the sick — including support when residents are hospitalised.</p></div>
+    <div class="service-card fade-up d2"><span class="service-num">03</span><span class="service-icon">🍽️</span><h3 class="service-title">Nutrition & Meals</h3><p class="service-desc">Balanced, nutritious meals served with love and community. Mealtimes are moments of fellowship and nourishment — for body and soul alike.</p></div>
+    <div class="service-card fade-up"><span class="service-num">04</span><span class="service-icon">🎂</span><h3 class="service-title">Activities & Celebrations</h3><p class="service-desc">Liturgical celebrations, birthday parties, social gatherings, music, and enriching activities that bring joy and keep spirits high every day.</p></div>
+    <div class="service-card fade-up d1"><span class="service-num">05</span><span class="service-icon">✝️</span><h3 class="service-title">Spiritual Support</h3><p class="service-desc">Daily prayers in the chapel, pastoral visits, sacraments, and spiritual companionship — offering peace and comfort to residents of all faiths and backgrounds.</p></div>
+    <div class="service-card fade-up d2"><span class="service-num">06</span><span class="service-icon">🤲</span><h3 class="service-title">The Collecting Mission</h3><p class="service-desc">Each day, two Little Sisters go out to ask for donations in money or in kind — continuing Saint Jeanne Jugan's tradition of trusting in Providence and human solidarity.</p></div>
+  </div>
+</section>
+
+<!-- JEANNE JUGAN -->
+<section id="jeanne">
+  <div class="section-tag">Our Foundress</div>
+  <h2 class="section-h2">Saint Jeanne Jugan<br><em>Mother of the Poor</em></h2>
+  <p class="section-sub">The life of a humble woman whose single act of charity gave birth to a worldwide mission of love for the elderly poor.</p>
+  <div class="jeanne-grid">
+    <div class="jeanne-visual">
+      <div class="jeanne-visual-accent"></div>
+      <div class="jeanne-dates">October 25, 1792 — August 29, 1879</div>
+      <div class="jeanne-name">Jeanne Jugan<em>Sister Mary of the Cross</em></div>
+      <p>Born in Cancale, Brittany, France, Jeanne grew up in poverty after her father was lost at sea. From an early age she knew God had a special call for her — <em>"a work not yet founded,"</em> she told her mother at 24 when she refused marriage.</p>
+      <p>On one winter's evening in 1839 in Saint Servan, she opened her home to an elderly blind woman who had found herself alone after the death of her sister. Jeanne carried her on her back to give her her own bed. From that single act of love, the Congregation of the Little Sisters of the Poor was born.</p>
+      <p>Despite an injustice that stripped her of her role as Superior — which she met only with silence and humility — Jeanne spent 27 years in quiet prayer at La Tour Saint-Joseph, forming the young Sisters in the original charism.</p>
+      <div class="sayings">
+        <div class="saying">"Love God very much, and the Poor in Him."</div>
+        <div class="saying">"Take good care of the elderly, for it is Jesus himself whom you care for in them."</div>
+        <div class="saying">"Making the poor happy is all that counts."</div>
+        <div class="saying">"Treat the poor compassionately, and Jesus will treat you kindly on your last day."</div>
+        <div class="saying">"Jesus is waiting for you in the Chapel. Go find him when you are at the end of your patience."</div>
+      </div>
+    </div>
+    <div>
+      <div class="pope-card"><div class="pope-date">July 13, 1879</div><h4>Heroicity of Virtues Recognised</h4><p>The Church officially acknowledged the heroic virtues of Jeanne Jugan, beginning her formal cause for sainthood.</p></div>
+      <div class="pope-card"><div class="pope-date">October 3, 1982 — Pope John Paul II</div><h4>Beatification</h4><p>Before 6,000 pilgrims from around the world, Pope John Paul II declared Jeanne Jugan "Blessed" — calling her the most humble woman of Cancale, "so poor in possessions yet so rich in faith." He praised her prophetic intuition of the needs of the elderly: to be respected, loved, and to deepen their faith.</p></div>
+      <div class="pope-card"><div class="pope-date">October 11, 2009 — Pope Benedict XVI</div><h4>Canonisation</h4><p>Pope Benedict XVI proclaimed Jeanne's holiness, calling her "a beacon to guide our societies." He honoured her "compassionate gaze drawn from profound communion with God" and her ever-timely charism for a world where so many elderly suffer poverty and solitude.</p></div>
+      <div class="novena-box">
+        <h4>Novena Prayer to Saint Jeanne Jugan</h4>
+        <p>Jesus, you rejoiced and praised your Father for having revealed to little ones the mysteries of the Kingdom of Heaven. We thank you for the graces granted to your humble servant, Saint Jeanne Jugan, to whom we confide our petitions. Father of the poor, hear the petitions she presents on our behalf, through Mary your Mother and ours. Amen.</p>
+        <p style="margin-top:10px;font-size:0.72rem;color:var(--terracotta);font-weight:500;">Liturgical Feast: 30th August · Sainte Jeanne Jugan, pray for us.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-tag">Photo Gallery</div>
+  <h2 class="section-h2">Life at Little Sisters<br><em>Mombasa</em></h2>
+  <p class="section-sub">Glimpses of daily life, celebrations, and community at our home in Tudor.</p>
+  <div class="gallery-grid" id="galleryGrid">
+    {% if featured_photos %}
+      {% for photo in featured_photos %}
+      <div class="gallery-item" onclick="openLightbox('{{ photo.image.url }}','{{ photo.title }}')">
+        <img src="{{ photo.image.url }}" alt="{{ photo.alt_text|default:photo.title }}" loading="lazy">
+        <div class="gallery-item-overlay"><span>{{ photo.title }}</span></div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="gallery-placeholder"><p>📷 Gallery photos will appear here once uploaded via the admin panel.</p></div>
+    {% endif %}
+  </div>
+  <div class="gallery-view-all">
+    <a href="/gallery/" class="btn-outline-light">View Full Gallery</a>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">×</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="section-tag">News & Updates</div>
+  <h2 class="section-h2">Stories of <em>grace and giving</em></h2>
+  <p class="section-sub">News, reflections and updates from the Little Sisters of the Poor in Mombasa.</p>
+  <div class="blog-grid">
+    {% if recent_blog_posts %}
+      {% for post in recent_blog_posts %}
+      <div class="blog-card fade-up">
+        {% if post.featured_image %}
+          <img class="blog-featured-img" src="{{ post.featured_image.url }}" alt="{{ post.title }}" loading="lazy">
+        {% else %}
+          <div class="blog-img-placeholder">✝️</div>
+        {% endif %}
+        <div class="blog-content">
+          <div class="blog-date">{{ post.published_at|date:"F j, Y" }}</div>
+          <h3 class="blog-title">{{ post.title }}</h3>
+          <p class="blog-excerpt">{{ post.excerpt }}</p>
+          <a href="/blog/{{ post.slug }}/" class="read-more">Read More →</a>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="blog-empty" style="grid-column:1/-1;">
+        <p>News and updates will appear here. Please check back soon.</p>
+      </div>
+    {% endif %}
+  </div>
+  {% if recent_blog_posts %}
+  <div class="blog-view-all">
+    <a href="/blog/" class="btn-outline">View All Posts</a>
+  </div>
+  {% endif %}
+</section>
+
+<!-- EVENTS -->
+<section id="events">
+  <div class="section-tag">Upcoming Events</div>
+  <h2 class="section-h2">Join us for <em>special occasions</em></h2>
+  <p class="section-sub">Celebrations, masses, community days and more at the Little Sisters' home in Tudor.</p>
+  <div class="events-grid">
+    {% if upcoming_events %}
+      {% for event in upcoming_events %}
+      <div class="event-card fade-up">
+        <div class="event-date-badge">
+          <span class="day">{{ event.date|date:"d" }}</span>
+          <span class="month">{{ event.date|date:"M" }}</span>
+        </div>
+        <div class="event-type-tag">{{ event.get_event_type_display }}</div>
+        <div class="event-title">{{ event.title }}</div>
+        <p class="event-desc">{{ event.description|truncatewords:20 }}</p>
+        <div class="event-meta">
+          {% if event.start_time %}<span>🕐 {{ event.start_time|time:"g:i A" }}{% if event.end_time %} – {{ event.end_time|time:"g:i A" }}{% endif %}</span>{% endif %}
+          <span>📍 {{ event.location }}</span>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="events-empty" style="grid-column:1/-1;">
+        <p>No upcoming events at this time. Events will be posted here when scheduled.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+{% if testimonials %}
+<section id="testimonials">
+  <div class="section-tag">Words of Gratitude</div>
+  <h2 class="section-h2">What our <em>community says</em></h2>
+  <div class="testimonials-grid">
+    {% for t in testimonials %}
+    <div class="testimonial-card fade-up">
+      <p class="testimonial-quote">{{ t.quote }}</p>
+      <div class="testimonial-person">
+        {% if t.image %}
+          <img class="testimonial-avatar" src="{{ t.image.url }}" alt="{{ t.name }}">
+        {% else %}
+          <div class="testimonial-avatar-placeholder">{{ t.name|first }}</div>
+        {% endif %}
+        <div>
+          <div class="testimonial-name">{{ t.name }}</div>
+          <div class="testimonial-role">{{ t.role }}</div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- DONATE -->
+<section id="donate">
+  <div class="section-tag">Support Our Mission</div>
+  <h2 class="section-h2">Become a<br><em>Benefactor</em></h2>
+  <div class="donate-wrapper">
+    <div>
+      <p class="benefactor-text">Saint Jeanne Jugan used to remind the Little Sisters of their grave duty to pray daily for their benefactors. She would say: <em>"What would we do without them."</em></p>
+      <p class="benefactor-text">The elderly we welcome are those who are financially poor, without anyone to provide their daily needs. Each day, two Little Sisters go out to ask for donations — in kind or in money — for their upkeep. Without your precious assistance, we could not make the last days of our elderly happy.</p>
+      <p class="benefactor-text">Donations can be monetary, in kind, or expertise — according to the capacity of each one. We are deeply grateful to each of you, and we pray for your intentions every day. <em>In the Chapel, the elderly and the Sisters pray for the intentions of our Benefactors, Friends and family members.</em></p>
+      <div class="benefactor-quote">"What would we do without them." — Saint Jeanne Jugan</div>
+      <div class="bank-details">
+        <h4>Co-operative Bank of Kenya</h4>
+        <div class="bank-row"><span>Account (KES)</span><span>01102225004004</span></div>
+        <div class="bank-row"><span>Account (USD)</span><span>02102225004005</span></div>
+        <div class="bank-row"><span>Account Name</span><span>LITTLE SISTERS OF THE POOR</span></div>
+        <div class="bank-row"><span>Bank Code</span><span>11</span></div>
+        <div class="bank-row"><span>Branch</span><span>Digo Road — Code 050</span></div>
+        <div class="bank-row"><span>Swift Code</span><span>KCOOKENA</span></div>
+        <div class="bank-row"><span>CoopBank Paybill</span><span>400200</span></div>
+        <div class="bank-row"><span>M-Pesa Paybill</span><span>654749 · Account: Your Name</span></div>
+        <div class="bank-row"><span>M-Pesa Number</span><span>0701 716 181</span></div>
+      </div>
+    </div>
+    <div class="donate-form">
+      <h3>Make a Donation</h3>
+      <p>Your gift directly supports our elderly residents</p>
+      <div class="type-toggle">
+        <button class="type-btn active" onclick="setType(this)">One-Time</button>
+        <button class="type-btn" onclick="setType(this)">Monthly</button>
+      </div>
+      <div class="amount-grid">
+        <button class="amount-btn" onclick="selectAmt(this,'500')">KES 500</button>
+        <button class="amount-btn active" onclick="selectAmt(this,'1000')">KES 1,000</button>
+        <button class="amount-btn" onclick="selectAmt(this,'2500')">KES 2,500</button>
+        <button class="amount-btn" onclick="selectAmt(this,'5000')">KES 5,000</button>
+        <button class="amount-btn" onclick="selectAmt(this,'USD10')">USD 10</button>
+        <button class="amount-btn" onclick="selectAmt(this,'custom')">Custom</button>
+      </div>
+      <div class="form-group" id="customAmtGroup" style="display:none;">
+        <label>Enter Amount (KES)</label>
+        <input type="number" id="d-custom-amt" placeholder="e.g. 3000" min="100">
+      </div>
+      <div class="mpesa-highlight">📱 <strong>M-Pesa Paybill: 654749</strong> · Account: Your Name<br>Or send directly to <strong>0701 716 181</strong></div>
+      <div class="form-group"><label>Full Name</label><input type="text" placeholder="Your full name" id="d-name"></div>
+      <div class="form-group"><label>Phone / Email</label><input type="text" placeholder="M-Pesa number or email" id="d-contact"></div>
+      <div class="form-group"><label>Payment Method</label>
+        <select id="d-method">
+          <option value="M-Pesa">M-Pesa</option>
+          <option value="Bank Transfer">Bank Transfer</option>
+          <option value="PayPal">PayPal</option>
+          <option value="Card">Credit/Debit Card</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Message (Optional)</label><textarea id="d-message" placeholder="Share a message or dedication…"></textarea></div>
+      <button class="donate-submit" onclick="handleDonate()">Donate Now →</button>
+      <p class="secure-note">🔒 Secure · We pray for every donor by name in our Chapel</p>
+    </div>
+  </div>
+</section>
+
+<!-- VOLUNTEER / AJJ -->
+<section id="volunteer">
+  <div class="section-tag">Get Involved</div>
+  <h2 class="section-h2">Association Jeanne Jugan<br>&amp; <em>Volunteers</em></h2>
+  <div class="volunteer-grid">
+    <div>
+      <p class="ajj-intro">The Association Jeanne Jugan was established in 1998 as a contemporary response to the prophetic intuition of our foundress. She envisioned hospitality as a humble, charitable service uniting in one family the Little Sisters, the elderly, and lay collaborators who wish to serve Jesus Christ in the person of their needy brothers and sisters.</p>
+      <p class="ajj-intro">Since its approval by the Vatican, over 2,000 women and men around the world have joined the Association — from all walks of life and professions, drawn to the person of Saint Jeanne Jugan. To join, one must be at least 18 years of age and participate in a yearlong programme of formation. Membership is renewed each May 1st, the Feast of St. Joseph the Worker.</p>
+      <div class="ajj-activities">
+        <h4>Activities you can be part of:</h4>
+        <ul class="activity-list">
+          <li>Liturgical celebrations and prayer with residents</li>
+          <li>Visiting the sick in the home or when hospitalised</li>
+          <li>Assisting in the kitchen and laundry departments</li>
+          <li>Helping with maintenance and general upkeep</li>
+          <li>Organising birthday party celebrations</li>
+          <li>Music, entertainment and recreational activities</li>
+          <li>IT support, administrative assistance</li>
+          <li>Sharing your own proposal or special talent</li>
+        </ul>
+      </div>
+      <div class="ajj-contact-box">
+        <p>📞 <strong>+254 723 087 740</strong></p>
+        <p>✉️ <a href="mailto:ajj@littlesisters-mombasa.org">ajj@littlesisters-mombasa.org</a></p>
+      </div>
+    </div>
+    <div>
+      <div class="opp-cards">
+        <div class="opp-card"><div class="opp-icon">🤲</div><div><div class="opp-title">Companion Visitor</div><p class="opp-desc">Spend time with residents — reading, conversing, or simply sitting with them. Your presence is a gift beyond measure.</p></div></div>
+        <div class="opp-card"><div class="opp-icon">🩺</div><div><div class="opp-title">Medical Professional</div><p class="opp-desc">Doctors, nurses, physiotherapists, and dentists are welcome to offer their skills in service to our nursing department.</p></div></div>
+        <div class="opp-card"><div class="opp-icon">🍳</div><div><div class="opp-title">Kitchen & Hospitality</div><p class="opp-desc">Help prepare and serve meals, support special celebrations, or assist with the daily running of our home.</p></div></div>
+        <div class="opp-card"><div class="opp-icon">🤝</div><div><div class="opp-title">Corporate Partnership</div><p class="opp-desc">Organisations can partner through sponsorships, in-kind donations, or staff volunteering programmes.</p></div></div>
+      </div>
+      <div class="contact-form-box">
+        <h3>Send Us a Message</h3>
+        <p>We'd love to hear from you — however you wish to help.</p>
+        <div class="form-group"><label>Full Name</label><input type="text" id="v-name" placeholder="Your full name"></div>
+        <div class="form-group"><label>Email</label><input type="email" id="v-email" placeholder="you@example.com"></div>
+        <div class="form-group"><label>Phone</label><input type="tel" id="v-phone" placeholder="+254..."></div>
+        <div class="form-group"><label>I'm interested in</label>
+          <select id="v-interest">
+            <option>Volunteering / AJJ</option>
+            <option>Corporate Partnership</option>
+            <option>In-kind Donations</option>
+            <option>Admissions / Elder Care</option>
+            <option>General Inquiry</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Message</label><textarea id="v-msg" placeholder="Tell us how you'd like to get involved…"></textarea></div>
+        <button class="donate-submit" onclick="handleVolunteer()">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOCATION -->
+<section id="vocation">
+  <div class="section-tag">Religious Vocation</div>
+  <h2 class="section-h2">Called to become<br><em>a Little Sister</em></h2>
+  <div class="vocation-grid">
+    <div>
+      <p class="vocation-text">We are an international religious congregation of Pontifical rights, present in more than 30 countries. We have a unique charism of welcoming the elderly poor in our homes and caring for them as family until they return to their maker.</p>
+      <p class="vocation-text">To become a Little Sister, you must be a practicing Catholic aged 18–25 with a C- or better. The journey of formation unfolds through several stages of discernment and growth.</p>
+      <div class="stages">
+        <div class="stage"><div class="stage-left"><div class="stage-dot"></div><div class="stage-line"></div></div><div class="stage-content"><h4>Initial Observing</h4><p>The aspirant comes to participate in daily life — prayer, hospitality and community — coming and going freely while discerning the call.</p></div></div>
+        <div class="stage"><div class="stage-left"><div class="stage-dot"></div><div class="stage-line"></div></div><div class="stage-content"><h4>Aspirancy</h4><p>A formal period where the young woman moves into the home to observe our life more deeply — lasting several months according to individual needs.</p></div></div>
+        <div class="stage"><div class="stage-left"><div class="stage-dot"></div><div class="stage-line"></div></div><div class="stage-content"><h4>Pre-Postulancy — Benin, West Africa</h4><p>As a French congregation, aspirants learn the language and are initiated into prayer, the spirit of the congregation, and its history.</p></div></div>
+        <div class="stage"><div class="stage-left"><div class="stage-dot"></div><div class="stage-line"></div></div><div class="stage-content"><h4>Postulancy</h4><p>One year of formal postulancy, deepening formation in the spirit and mission of Saint Jeanne Jugan.</p></div></div>
+        <div class="stage"><div class="stage-left"><div class="stage-dot"></div><div class="stage-line"></div></div><div class="stage-content"><h4>Novitiate & First Vows</h4><p>Two years of novitiate, culminating in first vows for three years and mission to one of our homes in service of the elderly.</p></div></div>
+      </div>
+      <div class="vocation-contact">
+        <p>📞 <strong>+254 702 302 857</strong></p>
+        <p>✉️ <a href="mailto:vocations@littlesisters-mombasa.org">vocations@littlesisters-mombasa.org</a></p>
+      </div>
+    </div>
+    <div>
+      <div class="vow-box">
+        <h3>The Four Vows</h3>
+        <div class="vow-item"><div class="vow-num">I</div><div><h4>Chastity</h4><p>A total gift of self to God and to those we serve, freeing us to love all without reserve.</p></div></div>
+        <div class="vow-item"><div class="vow-num">II</div><div><h4>Poverty</h4><p>Sharing in the poverty of those we serve, trusting in Providence and the generosity of our benefactors for all our needs.</p></div></div>
+        <div class="vow-item"><div class="vow-num">III</div><div><h4>Obedience</h4><p>Following the will of God as expressed through the Church, the congregation, and our superiors.</p></div></div>
+        <div class="vow-item"><div class="vow-num">IV</div><div><h4>Hospitality</h4><p>Our unique 4th vow — the heart of our charism. To welcome the elderly poor as Christ, with unconditional joy and love.</p></div></div>
+      </div>
+      <div class="novena-box" style="margin-top:18px">
+        <h4>A Word of Scripture</h4>
+        <p>"Unless the grain of wheat falls to the ground and dies, it remains only a seed; but if it dies, it bears much fruit." — John 12:24</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-tag">Find Us</div>
+  <h2 class="section-h2">We are always<br><em>here to welcome you</em></h2>
+  <div class="contact-grid">
+    <div class="contact-depts fade-up">
+      <div class="dept-card"><h4>📋 Administration & Admissions</h4>
+        <div class="dept-item"><span>📞</span><a href="tel:+254733346352">+254 733 346 352</a></div>
+        <div class="dept-item"><span>✉️</span><a href="mailto:admin@littlesisters-mombasa.org">admin@littlesisters-mombasa.org</a></div>
+      </div>
+      <div class="dept-card"><h4>💝 Collecting & Donations</h4>
+        <div class="dept-item"><span>📞</span><a href="tel:+254702302857">+254 702 302 857</a></div>
+        <div class="dept-item"><span>✉️</span><a href="mailto:donations@littlesisters-mombasa.org">donations@littlesisters-mombasa.org</a></div>
+      </div>
+      <div class="dept-card"><h4>🩺 Nursing Department</h4>
+        <div class="dept-item"><span>📞</span><a href="tel:+254723087740">+254 723 087 740</a></div>
+        <div class="dept-item"><span>✉️</span><a href="mailto:nursing@littlesisters-mombasa.org">nursing@littlesisters-mombasa.org</a></div>
+      </div>
+      <div class="dept-card"><h4>🙏 Vocations</h4>
+        <div class="dept-item"><span>📞</span><a href="tel:+254702302857">+254 702 302 857</a></div>
+        <div class="dept-item"><span>✉️</span><a href="mailto:vocations@littlesisters-mombasa.org">vocations@littlesisters-mombasa.org</a></div>
+      </div>
+      <div class="dept-card"><h4>👥 Association Jeanne Jugan</h4>
+        <div class="dept-item"><span>📞</span><a href="tel:+254723087740">+254 723 087 740</a></div>
+        <div class="dept-item"><span>✉️</span><a href="mailto:ajj@littlesisters-mombasa.org">ajj@littlesisters-mombasa.org</a></div>
+      </div>
+      <div class="dept-card"><h4>💼 Employment</h4>
+        <div class="dept-item"><span>📞</span><a href="tel:+254703172482">+254 703 172 482</a></div>
+        <div class="dept-item"><span>✉️</span><a href="mailto:hr@littlesisters-mombasa.org">hr@littlesisters-mombasa.org</a></div>
+      </div>
+    </div>
+    <div class="fade-up d1">
+      <div class="map-box">
+        <span class="map-pin">📌</span>
+        <p class="map-name">Tudor, Mombasa</p>
+        <p class="map-addr">Tom Mboya Avenue, Tudor · P.O. Box 8429-80100</p>
+        <p class="map-hours">Visiting: Mon–Sat 9am–12pm &amp; 3pm–5pm · Sun 2pm–5pm</p>
+        <a href="https://maps.google.com/?q=Tom+Mboya+Avenue+Tudor+Mombasa+Kenya" target="_blank" rel="noopener" class="map-btn">Open in Google Maps →</a>
+      </div>
+      <div class="services" style="margin-top:16px;">
+        {% if services %}
+        <div style="background:var(--warm-white);padding:20px;border-radius:2px;border:1px solid rgba(201,180,138,0.3);">
+          <h4 style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--deep-brown);margin-bottom:12px;font-weight:600;">Mass & Service Times</h4>
+          {% for srv in services %}
+          <div style="padding:8px 0;border-bottom:1px solid rgba(201,180,138,0.2);font-size:0.82rem;color:var(--text-mid);">
+            <strong style="color:var(--deep-brown);">{{ srv.title }}</strong>
+            {% if srv.day_of_week %} — {{ srv.day_of_week }}{% endif %}
+            {% if srv.start_time %} {{ srv.start_time|time:"g:i A" }}{% endif %}
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="footer-logo-wrap"><div class="fc"></div><div class="footer-name">Little Sisters of the Poor <span>Mombasa, Kenya · Est. 1969</span></div></div>
+      <p>Serving the needy elderly of Mombasa with love, dignity and faith. Every elder entrusted to our care is welcomed as Christ himself. We are deeply grateful to all who walk this mission with us.</p>
+    </div>
+    <div class="footer-col"><h4>Navigate</h4>
+      <ul class="footer-links">
+        <li><a href="#about">About Us</a></li><li><a href="#services">Services</a></li>
+        <li><a href="#jeanne">Our Foundress</a></li><li><a href="#gallery">Gallery</a></li>
+        <li><a href="#events">Events</a></li><li><a href="#volunteer">Volunteer / AJJ</a></li>
+        <li><a href="#vocation">Vocation</a></li><li><a href="#donate">Donate</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-col"><h4>Donate</h4>
+      <ul class="footer-links">
+        <li><a href="#donate">M-Pesa Paybill: 654749</a></li>
+        <li><a href="#donate">Account: Your Name</a></li>
+        <li><a href="#donate">M-Pesa: 0701 716 181</a></li>
+        <li><a href="#donate">CoopBank Paybill: 400200</a></li>
+        <li><a href="#donate">CoopBank KES: 01102225004004</a></li>
+      </ul>
+    </div>
+    <div class="footer-col"><h4>Contact</h4>
+      <ul class="footer-links">
+        <li><a href="#">Tom Mboya Ave, Tudor</a></li>
+        <li><a href="#">P.O. Box 8429-80100</a></li>
+        <li><a href="tel:+254733346352">+254 733 346 352</a></li>
+        <li><a href="mailto:admin@littlesisters-mombasa.org">admin@littlesisters-mombasa.org</a></li>
+        <li><a href="https://maps.google.com/?q=Tom+Mboya+Avenue+Tudor+Mombasa+Kenya" target="_blank" rel="noopener">Get Directions</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Little Sisters of the Poor – Mombasa · <em>Sainte Jeanne Jugan, pray for us · Feast: 30th August</em></p>
+    <div style="display:flex;gap:18px;"><a href="#">Privacy</a><a href="#">Terms</a></div>
+  </div>
+</footer>
+
+<div class="notif" id="notif" role="alert" aria-live="polite"></div>
+
+<script>
+// Nav scroll
+window.addEventListener('scroll',()=>{ document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20); });
+function toggleMenu(){ document.getElementById('navLinks').classList.toggle('open'); }
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open')));
+
+// Intersection Observer for fade-up
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+
+// Form helpers
+let selectedAmt='1000';
+function selectAmt(btn,val){
+  document.querySelectorAll('.amount-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedAmt=val;
+  document.getElementById('customAmtGroup').style.display = val==='custom'?'block':'none';
+}
+function setType(btn){document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
+
+function notify(msg,err){
+  const n=document.getElementById('notif');
+  n.textContent=msg;
+  n.style.background=err?'var(--terracotta)':'var(--sage)';
+  n.classList.add('show');
+  setTimeout(()=>n.classList.remove('show'),5500);
+}
+
+function getAmt(){
+  if(selectedAmt==='custom'){
+    const v=document.getElementById('d-custom-amt').value;
+    return v?'KES '+v:'your chosen amount';
+  }
+  return document.querySelector('.amount-btn.active')?.textContent||'your chosen amount';
+}
+
+function handleDonate(){
+  const name=document.getElementById('d-name').value.trim();
+  const contact=document.getElementById('d-contact').value.trim();
+  if(!name||!contact){notify('Please fill in your name and contact details.',true);return;}
+  const method=document.getElementById('d-method').value;
+  const amt=getAmt();
+  if(method==='M-Pesa'){
+    notify('🙏 Thank you, '+name+'! Send '+amt+' via M-Pesa Paybill 654749, Account: '+name+'. Or to 0701 716 181. We will pray for you!');
+  }else if(method==='Bank Transfer'){
+    notify('🙏 Thank you, '+name+'! Transfer '+amt+' to Co-op Bank Account 01102225004004 (KES) or 02102225004005 (USD). God bless you!');
+  }else{
+    notify('🙏 Thank you, '+name+'! You will be redirected to complete your '+amt+' donation via '+method+'. God bless you!');
+  }
+  // Post to API
+  fetch('/api/donations/',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},
+    body:JSON.stringify({
+      donor_name:name,donor_email:contact.includes('@')?contact:'',
+      donor_phone:contact.includes('@')?'':contact,
+      amount:selectedAmt==='custom'?document.getElementById('d-custom-amt').value||100:parseInt(selectedAmt.replace('USD','')||1000),
+      currency:selectedAmt.startsWith('USD')?'USD':'KES',
+      method:method.toLowerCase().replace('/','').replace(' ',''),
+      message:document.getElementById('d-message').value,
+    })
+  }).catch(()=>{});
+}
+
+function handleVolunteer(){
+  const n=document.getElementById('v-name').value.trim();
+  const e=document.getElementById('v-email').value.trim();
+  const m=document.getElementById('v-msg').value.trim();
+  if(!n||!e||!m){notify('Please fill in all required fields.',true);return;}
+  notify('🙏 Thank you, '+n+'! Your message has been received. We will contact you soon. God bless you!');
+  // Post to API
+  fetch('/api/contact/',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','X-CSRFToken':getCookie('csrftoken')},
+    body:JSON.stringify({
+      full_name:n,email:e,phone:document.getElementById('v-phone').value,
+      interest:document.getElementById('v-interest').value.toLowerCase().replace(/ \/ /,'-').replace(/ /,'-').substring(0,15),
+      message:m
+    })
+  }).catch(()=>{});
+  ['v-name','v-email','v-phone','v-msg'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+}
+
+// Lightbox
+function openLightbox(src,alt){
+  document.getElementById('lightboxImg').src=src;
+  document.getElementById('lightboxImg').alt=alt||'';
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
+
+// CSRF helper
+function getCookie(name){const v=document.cookie.match('(^|;) ?'+name+'=([^;]*)(;|$)');return v?v[2]:'';}
+</script>
+</body>
+</html>

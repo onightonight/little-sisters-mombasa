@@ -1,0 +1,126 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Updates & News - Little Sisters of the Poor</title>
+<style>
+  :root {
+    --cream:#faf7f2;--warm-white:#fffef9;--terracotta:#c4714a;--terracotta-light:#e8956d;
+    --deep-brown:#2c1810;--mid-brown:#5a3e2b;--sage:#7a9e7e;--sand:#e8d5b0;--sand-dark:#c9b48a;
+    --text-dark:#1a0f08;--text-mid:#4a3728;--text-light:#8a7060;--gold:#c9a84c;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text-dark);}
+  
+  nav{position:fixed;top:0;width:100%;z-index:1000;background:rgba(250,247,242,0.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,180,138,0.3);padding:0 4%;display:flex;align-items:center;justify-content:space-between;height:68px;}
+  .nav-logo{display:flex;align-items:center;gap:11px;text-decoration:none;}
+  .nc{width:26px;height:26px;position:relative;display:flex;align-items:center;justify-content:center;}
+  .nc::before,.nc::after{content:'';position:absolute;background:var(--terracotta);border-radius:2px;}
+  .nc::before{width:4px;height:26px;} .nc::after{width:18px;height:4px;top:7px;}
+  .nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:600;color:var(--deep-brown);}
+  .nav-logo-text span{display:block;font-size:0.7rem;color:var(--text-light);}
+  .nav-links{display:flex;gap:20px;list-style:none;}
+  .nav-links a{font-size:0.78rem;font-weight:400;text-transform:uppercase;color:var(--text-mid);text-decoration:none;}
+  .nav-links a:hover{color:var(--terracotta);}
+
+  .page-header{padding-top:140px;padding-bottom:60px;text-align:center;background:var(--warm-white);}
+  .page-header h1{font-family:'Cormorant Garamond',serif;font-size:3rem;color:var(--deep-brown);margin-bottom:12px;}
+  .page-header p{font-size:1.05rem;color:var(--text-mid);max-width:600px;margin:0 auto;}
+
+  .container{max-width:900px;margin:0 auto;padding:60px 4%;}
+
+  .blog-list{display:flex;flex-direction:column;gap:40px;}
+  .blog-post{background:white;border-radius:2px;overflow:hidden;box-shadow:0 8px 24px rgba(44,24,16,0.08);transition:all 0.3s;display:flex;flex-direction:row;}
+  .blog-post:hover{box-shadow:0 16px 40px rgba(44,24,16,0.15);}
+  .blog-featured{width:40%;aspect-ratio:2/1;object-fit:cover;background:var(--sand);}
+  .blog-body{width:60%;padding:32px;display:flex;flex-direction:column;justify-content:space-between;}
+  
+  .blog-meta{font-size:0.8rem;color:var(--terracotta);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;}
+  .blog-title{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;color:var(--deep-brown);margin-bottom:12px;line-height:1.4;}
+  .blog-excerpt{font-size:0.95rem;color:var(--text-mid);line-height:1.8;margin-bottom:16px;}
+  
+  .blog-footer{display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid var(--sand);}
+  .blog-author{font-size:0.85rem;color:var(--text-light);}
+  .read-more{background:var(--terracotta);color:white;text-decoration:none;padding:10px 20px;border-radius:2px;font-size:0.85rem;font-weight:500;text-transform:uppercase;transition:background 0.3s;}
+  .read-more:hover{background:var(--mid-brown);}
+
+  .article-header{margin-bottom:40px;padding-bottom:40px;border-bottom:2px solid var(--sand);}
+  .article-title{font-family:'Cormorant Garamond',serif;font-size:2.5rem;color:var(--deep-brown);margin-bottom:16px;line-height:1.3;}
+  .article-meta{font-size:0.9rem;color:var(--text-light);}
+  .article-featured{width:100%;max-height:500px;object-fit:cover;border-radius:2px;margin:32px 0;}
+  .article-content{font-size:1rem;color:var(--text-mid);line-height:2;margin-bottom:32px;}
+  .article-content p{margin-bottom:16px;}
+  .article-content h3{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--deep-brown);margin:24px 0 12px;}
+  .article-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:32px;padding-top:32px;border-top:1px solid var(--sand);}
+  .tag{background:var(--cream);padding:6px 12px;border-radius:2px;font-size:0.8rem;color:var(--text-mid);text-decoration:none;}
+  .tag:hover{background:var(--sand);}
+
+  footer{background:var(--deep-brown);color:white;padding:40px 5%;margin-top:80px;text-align:center;font-size:0.9rem;}
+
+  @media(max-width:768px){
+    .blog-post{flex-direction:column;}
+    .blog-featured{width:100%;}
+    .blog-body{width:100%;}
+    .page-header h1{font-size:2rem;}
+    .article-title{font-size:1.8rem;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="nc"></div>
+    <div class="nav-logo-text">Little Sisters<span>Mombasa</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="{% url 'gallery' %}">Gallery</a></li>
+    <li><a href="/">Updates</a></li>
+    <li><a href="{% url 'admin:index' %}">Admin</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <h1>Updates & News</h1>
+  <p>Stories, news, and updates from our community</p>
+</div>
+
+<!-- BLOG POSTS -->
+<div class="container">
+  <div class="blog-list">
+    {% for post in blog_posts %}
+    <div class="blog-post">
+      {% if post.featured_image %}
+      <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="blog-featured">
+      {% endif %}
+      <div class="blog-body">
+        <div>
+          <div class="blog-meta">{{ post.published_at|date:"M d, Y" }} • By {{ post.author.get_full_name|default:"Administrator" }}</div>
+          <h2 class="blog-title">{{ post.title }}</h2>
+          <p class="blog-excerpt">{{ post.excerpt }}</p>
+        </div>
+        <div class="blog-footer">
+          <span class="blog-author">Views: {{ post.views }}</span>
+          <a href="{% url 'blog-detail' post.slug %}" class="read-more">Read Full Article →</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p style="text-align:center;color:var(--text-light);padding:40px;">No updates yet. Check back soon!</p>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Little Sisters of the Poor – Mombasa · Sainte Jeanne Jugan, pray for us</p>
+</footer>
+
+</body>
+</html>
