@@ -151,7 +151,7 @@ if not DEBUG:
     SECURE_HSTS_PRELOAD = True
     X_FRAME_OPTIONS = 'DENY'
 
-# Logging
+# Logging — console only (safe for PythonAnywhere and any environment)
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -160,7 +160,6 @@ LOGGING = {
     },
     'handlers': {
         'console': {'class': 'logging.StreamHandler', 'formatter': 'verbose'},
-        'file': {'class': 'logging.FileHandler', 'filename': BASE_DIR / 'logs' / 'django.log', 'formatter': 'verbose'},
     },
     'loggers': {
         'django': {'handlers': ['console'], 'level': 'INFO'},
